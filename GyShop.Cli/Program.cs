@@ -10,7 +10,8 @@ namespace GyShop.Cli
     {
         private static Dictionary<string, string> users = new Dictionary<string, string>
         {
-            ["mateusz"] = "123456"
+            ["mateusz"] = "123456",
+            ["maciek"] = "123456"
         };
 
         private static List<string> items = new List<string>
@@ -31,6 +32,15 @@ namespace GyShop.Cli
             5
         };
 
+        private static List<string> orders = new List<string>
+        {
+            "maciek|design-patterns|12|linq|2"
+        };
+
+        /// <summary>
+        /// this method process an order
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to Goyello CleanCode Workshops Shop");
@@ -38,6 +48,7 @@ namespace GyShop.Cli
             Console.WriteLine("Please enter your username:");
             string username;
             string pwd;
+            // read username
             username = Console.ReadLine();
             Console.WriteLine("Please enter your password:");
             pwd = Console.ReadLine();
@@ -73,6 +84,7 @@ namespace GyShop.Cli
                 bool userCreated = false;
                 if (!isUser)
                 {
+                    // validate password if it's strong enough
                     bool pwdOk1 = false;
                     bool pwdOk2 = false;
                     bool pwdOk3 = false;
@@ -137,7 +149,7 @@ namespace GyShop.Cli
                     }
                     string[] products = new string[20];
                     int[] xps = new int[20];
-                    int i = 0;
+                    int i = 0;                    
                     while (true)
                     {
                         Console.WriteLine("Select an item");
@@ -148,11 +160,73 @@ namespace GyShop.Cli
                         }
                         Console.WriteLine("Select XP");
                         var xp = int.Parse(Console.ReadLine());
-                        products[i] = name;
-                        xps[i] = xp;
+                        // no product yet
+                        isUser = false;
+                        for (int ii = 0; ii < items.Count; ii++)
+                        {
+                            if (items[ii] == name)
+                            {
+                                var availableXp = xpOnStock[ii];
+                                if (availableXp < xp)
+                                {                                    
+                                    Console.WriteLine("No enough xp on stock for item: " + name);
+                                }
+                                else
+                                {
+                                    products[i] = name;
+                                    xps[i] = xp;
+                                    // decrease stock availability
+                                    xpOnStock[ii] = xpOnStock[ii] - xp;
+                                    i++;
+                                    isUser = true;
+                                }
+                                break;
+                            }
+                        }
+                        if (!isUser)
+                        {
+                            Console.WriteLine("Product does not exist: " + name);
+                        }                        
+                    }                    
+                    string product = null;
+                    int k = 0;
+                    int xp2 = 0;
+                    string userOrder = username;
+                    // print order summary
+                    do
+                    {
+                        if (k == 0)
+                        {
+                            Console.WriteLine("Congratzz" + username + ", you just ordered:");
+                        }
+                        product = products[k];
+                        if (product != null)
+                        {
+                            Console.WriteLine(product + " with XP " + xps[k]);
+                            xp2 = xp2 + xps[k];
+                            userOrder += "|" + product + "|" + xps[k];
+                            // k += 10;
+                        }
+                        k++;
+                    } while (product != null);
+                    orders.Add(userOrder);
+                    Console.WriteLine("Total xp: " + xp2);
+                    Console.WriteLine("Orders in queue:");
+                    // print all orders;
+                    for (int l = 0; l < 10; l++)
+                    {
+                        try
+                        {
+                            Console.WriteLine(orders[l]);
+                        }
+                        catch
+                        {
+                            // no more orders;
+                            break;
+                        }
                     }
                     Console.WriteLine("Press any key to exit...");
-                    Console.ReadLine();
+                    Console.ReadLine();                    
                 }
             }
         }
