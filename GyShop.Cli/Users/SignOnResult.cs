@@ -4,7 +4,6 @@
     {
         IncorrectPassword,
         InvalidPassword,
-        UsernameInUse,
         UserCreated,
         UserFound
     }

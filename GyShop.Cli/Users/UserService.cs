@@ -19,7 +19,7 @@
             }
             if (_userRepository.UserExists(username))
             {
-                return SignOnResult.UsernameInUse;
+                return SignOnResult.IncorrectPassword;
             }
             if (!_passwordValidator.IsValid(password))
             {

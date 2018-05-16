@@ -27,7 +27,7 @@ namespace GyShop.Cli.Orders
                 var product = _productRepository.GetProduct(item.Key);
                 if (product == null)
                 {
-                    notExistingItems.Add(product.Name);
+                    notExistingItems.Add(item.Key);
                 }
                 else if (item.Sum(x => x.Quantity) > product.AvailableQuantity)
                 {

@@ -38,10 +38,6 @@ namespace GyShop.Cli
                     Console.WriteLine("Invalid password");
                     Close();
                     return;
-                case SignOnResult.UsernameInUse:
-                    Console.WriteLine("Username already in use");
-                    Close();
-                    return;
                 case SignOnResult.UserCreated:
                     Console.WriteLine("User created");
                     break;
