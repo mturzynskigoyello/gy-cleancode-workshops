@@ -19,7 +19,7 @@ namespace GyShop.Cli.Users
             return _users.ContainsKey(username);
         }
 
-        public bool ValidateUser(string username, string password)
+        public bool UserExists(string username, string password)
         {
             return _users.TryGetValue(username, out var userPassword) && userPassword == password;
         }

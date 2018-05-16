@@ -13,7 +13,7 @@
 
         public SignOnResult SignOn(string username, string password)
         {
-            if (_userRepository.ValidateUser(username, password))
+            if (_userRepository.UserExists(username, password))
             {
                 return SignOnResult.UserFound;
             }

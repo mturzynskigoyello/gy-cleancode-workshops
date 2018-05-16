@@ -4,6 +4,6 @@
     {
         void AddUser(string username, string password);
         bool UserExists(string username);
-        bool ValidateUser(string username, string password);
+        bool UserExists(string username, string password);
     }
 }
